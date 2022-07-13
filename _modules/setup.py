@@ -3,10 +3,12 @@ import logging
 import configparser
 
 try:
-    logging.basicConfig(filename=f'logs.log',
-                        encoding='ISO-8859-1', level=logging.DEBUG)
+    logging.basicConfig(
+        filename='logs.log', encoding='ISO-8859-1', level=logging.DEBUG
+    )
+
 except:
-    logging.basicConfig(filename=f'logs.log', level=logging.DEBUG)
+    logging.basicConfig(filename='logs.log', level=logging.DEBUG)
 config = configparser.ConfigParser()
 config.read("config.ini")
 refresh_env = '$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User");'
@@ -23,8 +25,8 @@ def run_command(command):
 
 def check_config():
     config.read("config.ini")
-    has_cargo = "true" == config["DEPENDENCIES"]["Cargo"]
-    has_tools = "true" == config["DEPENDENCIES"]["BuildTools"]
+    has_cargo = config["DEPENDENCIES"]["Cargo"] == "true"
+    has_tools = config["DEPENDENCIES"]["BuildTools"] == "true"
     return has_cargo, has_tools
 
 
